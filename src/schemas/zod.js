@@ -12,6 +12,22 @@ import {
   UriSchema
 } from '#core/schemas';
 
+function isHttpUrl(value) {
+  // oxlint-disable-next-line no-control-regex
+  if (/[\\\x00-\x20\x7f]/u.test(value) || !/^https?:\/\//i.test(value)) {
+    return false;
+  }
+
+  const url = URL.parse(value);
+
+  return url !== null && !url.username && !url.password;
+}
+
+const HttpUrlSchema = z
+  .string()
+  .trim()
+  .refine(isHttpUrl, 'must be an absolute HTTP(S) URL without credentials');
+
 export const ConfigSchema = z.strictObject({
   title: z.string().min(1),
   description: z.string().min(1),
@@ -20,12 +36,12 @@ export const ConfigSchema = z.strictObject({
     .regex(/^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$/, 'must be a BCP 47 language tag')
     .default('ru'),
   copyright: z.string().optional(),
-  link: z.httpUrl().optional(),
-  feed: z.httpUrl().refine((value) => !value.includes('#'), 'must not contain a fragment'),
-  id: z
-    .httpUrl()
-    .refine((value) => !value.includes('#'), 'must not contain a fragment')
-    .optional(),
+  link: HttpUrlSchema.optional(),
+  feed: HttpUrlSchema.refine((value) => !value.includes('#'), 'must not contain a fragment'),
+  id: HttpUrlSchema.refine(
+    (value) => !value.includes('#'),
+    'must not contain a fragment'
+  ).optional(),
   prepare: z.function().optional(),
   limit: z.number().int().nonnegative().default(20),
   bytes: z.number().int().positive().default(8388608)
@@ -39,15 +55,16 @@ const AtomLanguageSchema = z.string().refine((value) => {
   }
 }, 'must be a locale identifier supported by Intl');
 
-const AtomUrlSchema = z
-  .httpUrl()
-  .refine((value) => !value.includes('#'), 'must not contain a fragment');
+const AtomUrlSchema = HttpUrlSchema.refine(
+  (value) => !value.includes('#'),
+  'must not contain a fragment'
+);
 
 export const AtomConfigSchema = z.strictObject({
   title: z.string().refine((value) => value.trim().length > 0, 'must not be empty'),
   feed: AtomUrlSchema,
   id: AtomUrlSchema.optional(),
-  link: z.httpUrl().optional(),
+  link: HttpUrlSchema.optional(),
   description: z.string().optional(),
   language: AtomLanguageSchema.optional(),
   author: AuthorSchema.optional(),
@@ -81,13 +98,7 @@ const PreparedCoverSchema = z.strictObject({
         return URL.canParse(value, 'https://example.invalid/');
       }
 
-      if (!/^https?:\/\//i.test(value)) {
-        return false;
-      }
-
-      const parsed = URL.parse(value);
-
-      return Boolean(parsed) && !parsed.username && !parsed.password;
+      return isHttpUrl(value);
     }, 'invalid prepared cover URL')
     .optional()
 });
