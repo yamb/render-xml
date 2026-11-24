@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { markdown } from '@meritt/yamb-markdown';
-import { microtypo } from '@meritt/yamb-microtypo';
-import { html } from '@meritt/yamb-render-html';
-import { feed, json } from '@meritt/yamb-render-json';
 import { DOMParser } from '@xmldom/xmldom';
+import { markdown } from 'yamb-markdown';
+import { microtypo } from 'yamb-microtypo';
+import { html } from 'yamb-render-html';
+import { feed, json } from 'yamb-render-json';
 import { prepare } from 'yamb/transform';
 
 import { atom, rss } from '../src/index.js';
