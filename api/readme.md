@@ -76,9 +76,9 @@ const prepared = {
 RSS and Atom accept the same preparation callback as HTML and JSON Feed. This example configures Atom with Markdown and MicroTypo.
 
 ```js
-import { markdown } from '@meritt/yamb-markdown';
-import { microtypo } from '@meritt/yamb-microtypo';
-import { atom } from '@meritt/yamb-render-xml';
+import { markdown } from 'yamb-markdown';
+import { microtypo } from 'yamb-microtypo';
+import { atom } from 'yamb-render-xml';
 import { prepare } from 'yamb/transform';
 
 await using md = markdown();
@@ -104,7 +104,7 @@ Each consumed derived title, `text.feedHtml`, `preview.feedHtml`, optional `prev
 
 | Code | Cause |
 | --- | --- |
-| `YAMB_XML_RENDERER_CONFIG` | Invalid factory configuration; `XmlRendererConfigError` is exported from `@meritt/yamb-render-xml/errors` |
+| `YAMB_XML_RENDERER_CONFIG` | Invalid factory configuration; `XmlRendererConfigError` is exported from `yamb-render-xml/errors` |
 | `YAMB_RENDERER_INPUT` | Missing/noniterable `posts`, invalid post/prepared fields, duplicate ID, missing Atom author or output overflow |
 | `YAMB_RENDERER_FAILED` | Unexpected failure, with the original error as `cause` |
 
