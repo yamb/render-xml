@@ -1,6 +1,6 @@
 {
   "name": "yamb-render-xml",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "RSS 2.0 and Atom 1.0 renderers for Yamb post collections",
   "keywords": [
     "atom",
