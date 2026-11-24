@@ -11,9 +11,9 @@ Unknown keys are rejected. Common settings apply to both factories:
 | Key | Meaning | Default |
 | --- | --- | --- |
 | `title` | Plain feed title; RSS requires a nonempty string, Atom rejects whitespace-only strings | Required |
-| `feed` | Absolute HTTP(S) feed URL without a fragment | Required |
-| `id` | Stable HTTP(S) identity URL without a fragment; keep it unchanged when relocating the feed | `feed` |
-| `link` | Site link, absolute HTTP(S) URL | `ctx.base.href` |
+| `feed` | Absolute HTTP(S) feed URL without credentials or a fragment | Required |
+| `id` | Stable absolute HTTP(S) identity URL without credentials or a fragment; keep it unchanged when relocating the feed | `feed` |
+| `link` | Site link, absolute HTTP(S) URL without credentials | `ctx.base.href` |
 | `prepare` | Sync or async whole-post callback `(source, ctx)` | Absent |
 | `limit` | Nonnegative safe integer; maximum posts consumed | `20` |
 | `bytes` | Positive safe integer; maximum final UTF-8 XML bytes | `8388608` |
