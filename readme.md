@@ -1,4 +1,4 @@
-# @meritt/yamb-render-xml
+# yamb-render-xml
 
 [![npm version][npm-image]][npm-url] [![Build status][github-actions-image]][github-actions-url] [![Coverage status][coveralls-image]][coveralls-url] [![Dependency status][libraries-image]][libraries-url]
 
@@ -11,11 +11,11 @@ For GitHub Packages, route the `@yamb` scope to `https://npm.pkg.github.com` and
 Requires Node.js 26.13 or later and `yamb`. Direct rendering needs no storage.
 
 ```bash
-pnpm add yamb @meritt/yamb-render-xml
+pnpm add yamb yamb-render-xml
 ```
 
 ```js
-import { atom, rss } from '@meritt/yamb-render-xml';
+import { atom, rss } from 'yamb-render-xml';
 
 const source = {
   id: 'hello',
@@ -68,11 +68,11 @@ console.log(await updates.collection(input, ctx));
 
 MIT. See `LICENSE`.
 
-[npm-image]: https://img.shields.io/npm/v/@meritt/yamb-render-xml?style=flat
-[npm-url]: https://www.npmjs.com/package/@meritt/yamb-render-xml
+[npm-image]: https://img.shields.io/npm/v/yamb-render-xml?style=flat
+[npm-url]: https://www.npmjs.com/package/yamb-render-xml
 [github-actions-image]: https://github.com/yamb/render-xml/actions/workflows/ci.yml/badge.svg
 [github-actions-url]: https://github.com/yamb/render-xml/actions/workflows/ci.yml
 [coveralls-image]: https://coveralls.io/repos/github/yamb/render-xml/badge.svg
 [coveralls-url]: https://coveralls.io/github/yamb/render-xml
-[libraries-image]: https://img.shields.io/librariesio/release/npm/%40meritt%2Fyamb-render-xml?style=flat
-[libraries-url]: https://libraries.io/npm/%40meritt%2Fyamb-render-xml
+[libraries-image]: https://img.shields.io/librariesio/release/npm/yamb-render-xml?style=flat
+[libraries-url]: https://libraries.io/npm/yamb-render-xml
