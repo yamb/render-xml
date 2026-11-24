@@ -3,8 +3,10 @@ minimumReleaseAgeStrict: true
 minimumReleaseAgeIgnoreMissingTime: false
 minimumReleaseAgeExclude:
   - 'yamb'
-  - 'yamb-*'
-  - '@meritt/yamb-*'
+  - 'yamb-markdown'
+  - 'yamb-microtypo'
+  - 'yamb-render-html'
+  - 'yamb-render-json'
   - microtypo
   - oxfmt
   - oxlint
