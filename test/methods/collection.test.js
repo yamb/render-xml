@@ -147,7 +147,7 @@ test('lastBuildDate is RFC 2822 of max(updatedAt OR publishedAt)', async () => {
     await p2.save();
 
     const out = await blog.render('rss', { posts: blog.all() });
-    const expected = new Date('2026-04-27T00:00:00Z').toUTCString();
+    const expected = 'Mon, 27 Apr 2026 00:00:00 GMT';
 
     assert.ok(
       out.includes(`<lastBuildDate>${expected}</lastBuildDate>`),

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { buildChannelHeader as header, closingTags } from '../../src/builders/channel.js';
+import { buildChannelHeader as header } from '../../src/builders/channel.js';
 import { writer } from '../../src/xml.js';
 
 const buildChannelHeader = (...args) => {
@@ -34,7 +34,7 @@ function makeConfig(overrides = {}) {
 }
 
 test('returns header up to but not including <item>', () => {
-  const out = buildChannelHeader(makeConfig(), makeCtx(), undefined);
+  const out = buildChannelHeader(makeConfig(), makeCtx());
   assert.ok(out.includes('<?xml version="1.0" encoding="UTF-8"?>'));
   assert.ok(
     out.includes('<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">')
@@ -42,6 +42,7 @@ test('returns header up to but not including <item>', () => {
   assert.ok(out.includes('<channel>'));
   assert.ok(out.includes('<title>'));
   assert.ok(!out.includes('<item>'));
+  assert.ok(!out.includes('<lastBuildDate>'));
   assert.ok(!out.includes('</channel>'));
   assert.ok(!out.includes('</rss>'));
 });
@@ -53,9 +54,7 @@ test('channel title/description/language are escaped', () => {
       description: 'Описание<x>',
       language: 'ru'
     }),
-
-    makeCtx(),
-    undefined
+    makeCtx()
   );
 
   assert.ok(out.includes('<title>A &amp; B</title>'));
@@ -64,16 +63,14 @@ test('channel title/description/language are escaped', () => {
 });
 
 test('link defaults to ctx.base.href when config.link absent', () => {
-  const out = buildChannelHeader(makeConfig(), makeCtx(), undefined);
+  const out = buildChannelHeader(makeConfig(), makeCtx());
   assert.ok(out.includes('<link>https://nko.io/</link>'));
 });
 
 test('config.link overrides ctx.base.href', () => {
   const out = buildChannelHeader(
     makeConfig({ title: 'Other Blog', link: 'https://other.io' }),
-
-    makeCtx(),
-    undefined
+    makeCtx()
   );
 
   assert.ok(out.includes('<link>https://other.io</link>'));
@@ -81,32 +78,11 @@ test('config.link overrides ctx.base.href', () => {
 });
 
 test('copyright is included when set', () => {
-  const out = buildChannelHeader(makeConfig({ copyright: '© 2026' }), makeCtx(), undefined);
+  const out = buildChannelHeader(makeConfig({ copyright: '© 2026' }), makeCtx());
   assert.ok(out.includes('<copyright>© 2026</copyright>'));
 });
 
 test('copyright is omitted when undefined', () => {
-  const out = buildChannelHeader(makeConfig(), makeCtx(), undefined);
+  const out = buildChannelHeader(makeConfig(), makeCtx());
   assert.ok(!out.includes('<copyright>'));
-});
-
-test('lastBuildDate included when non-undefined', () => {
-  const out = buildChannelHeader(makeConfig(), makeCtx(), 'Sun, 26 Apr 2026 12:00:00 GMT');
-  assert.ok(out.includes('<lastBuildDate>Sun, 26 Apr 2026 12:00:00 GMT</lastBuildDate>'));
-});
-
-test('lastBuildDate emitted even for empty string (not undefined)', () => {
-  const out = buildChannelHeader(makeConfig(), makeCtx(), '');
-  assert.ok(out.includes('<lastBuildDate></lastBuildDate>'));
-});
-
-test('lastBuildDate omitted when undefined', () => {
-  const out = buildChannelHeader(makeConfig(), makeCtx(), undefined);
-  assert.ok(!out.includes('<lastBuildDate>'));
-});
-
-test('closingTags returns </channel> and </rss>', () => {
-  const out = closingTags();
-  assert.ok(out.includes('</channel>'));
-  assert.ok(out.endsWith('</rss>'));
 });

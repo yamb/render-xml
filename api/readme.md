@@ -28,7 +28,7 @@ Unknown keys are rejected. Common settings apply to both factories:
 
 ## Output mapping
 
-Input is `{ posts }`, where `posts` is sync or async iterable. Every consumed post must be saved and published, with a unique valid-Unicode `id`, `uri`, `title`, `text`, `updatedAt` and `publishedAt`. Source fields follow the core post schema and limits; optional author, tags, preview and cover are validated before preparation. Input order is preserved.
+Input is `{ posts }`, where `posts` is sync or async iterable. Every consumed post must be saved and published, with a unique valid-Unicode `id`, `uri`, `title`, `text`, `updatedAt` and `publishedAt`. Source fields follow the core post schema and limits; dates may be ISO strings or `Temporal.Instant` values. Optional author, tags, preview and cover are validated before preparation. Input order is preserved.
 
 | Value | RSS 2.0 | Atom 1.0 |
 | --- | --- | --- |
@@ -51,7 +51,7 @@ Article URLs use core `url(post.uri, ctx.base)`, treating a mounted base pathnam
 
 Without `prepare`, body and preview are literal source escaped for HTML. The serializer emits XML character data, escaping `]]>` and removing XML 1.0 forbidden characters and unpaired surrogates. Legal Unicode and carriage returns survive, as do tabs and newlines in Atom category attributes.
 
-The callback receives its own PostData snapshot and context. It supplies title, body, preview and cover. The remaining metadata comes from the original snapshot. This example shows the consumed fields.
+The callback receives its own PostData snapshot, with dates as ISO strings, and context. It supplies title, body, preview and cover. The remaining metadata comes from the original snapshot. This example shows the consumed fields.
 
 ```js
 const prepared = {
@@ -105,7 +105,7 @@ Each consumed derived title, `text.feedHtml`, `preview.feedHtml`, optional `prev
 | Code | Cause |
 | --- | --- |
 | `YAMB_XML_RENDERER_CONFIG` | Invalid factory configuration; `XmlRendererConfigError` is exported from `yamb-render-xml/errors` |
-| `YAMB_RENDERER_INPUT` | Missing/noniterable `posts`, invalid post/prepared fields, duplicate ID, missing Atom author or output overflow |
+| `YAMB_RENDERER_INPUT` | Missing/noniterable `posts`, uncloneable post, invalid post/prepared fields, duplicate ID, missing Atom author or output overflow |
 | `YAMB_RENDERER_FAILED` | Unexpected failure, with the original error as `cause` |
 
 Yamb errors and native cancellation reasons pass through unchanged, including non-Error reasons. The renderers perform no filesystem or network I/O; the application owns callback work.

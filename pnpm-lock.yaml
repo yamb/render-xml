@@ -202,20 +202,20 @@ importers:
         specifier: 1.95.0
         version: 1.95.0
       yamb:
-        specifier: 1.0.3
-        version: 1.0.3
+        specifier: 1.1.0
+        version: 1.1.0
       yamb-markdown:
-        specifier: 0.1.2
-        version: 0.1.2(yamb@1.0.3)
+        specifier: 0.1.5
+        version: 0.1.5(yamb@1.1.0)
       yamb-microtypo:
-        specifier: 0.1.2
-        version: 0.1.2
+        specifier: 0.2.1
+        version: 0.2.1
       yamb-render-html:
-        specifier: 0.1.1
-        version: 0.1.1(yamb@1.0.3)
-      yamb-render-json:
         specifier: 0.1.3
-        version: 0.1.3(yamb@1.0.3)
+        version: 0.1.3(yamb@1.1.0)
+      yamb-render-json:
+        specifier: 0.2.0
+        version: 0.2.0(yamb@1.1.0)
 
 packages:
 
@@ -591,8 +591,8 @@ packages:
   micromark-util-types@2.0.3:
     resolution: {integrity: sha512-oxB2Ik03hI0gv+VNn9tnh1t1YEe9MDPptViAEgfdf3YQHsn0pzGTgCdlSCJXcwhqm8phaEuM7zeEu3QQzVBrPg==}
 
-  microtypo@0.4.1:
-    resolution: {integrity: sha512-qf656JEoZNac1hEXyZE2V8jCHzNvPIZ+V+LEKp/Ej8dc7Dgq68siUhs3WiFcfHmeEH7hJ8+8dsahh11zzt9Uew==}
+  microtypo@0.4.2:
+    resolution: {integrity: sha512-Ameeaca5vzTYfPZHevaaEt4ADRwXnnDqgUY5cxmiN9ono4g11NJ46ue9hNQGPNjGxzL3+6yICZKFwIIQSW3umQ==}
     engines: {node: '>=26.13.0'}
     hasBin: true
 
@@ -810,30 +810,30 @@ packages:
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
 
-  yamb-markdown@0.1.2:
-    resolution: {integrity: sha512-9g0kdlVSb3HVK5yHAwm4j8EepBJZBA2j5H7r6k8ZDrm3p98XIQ95sTRy+2LdKMSydW61JlzNVrMJXItuSL8ddQ==}
+  yamb-markdown@0.1.5:
+    resolution: {integrity: sha512-lYfCUgLRubmxjyq0Cc8XF3UYbpacUvFtufP9XPEj7zOKVHxgQcXnyuBZ//hJNiPDi3PfCBHaVJGKap5nyShUKg==}
     engines: {node: '>=26.13.0'}
     peerDependencies:
-      yamb: ^1.0.0
+      yamb: ^1.1.0
 
-  yamb-microtypo@0.1.2:
-    resolution: {integrity: sha512-gW/f8U1LOx4keZ7dBy6rBKdQvCRq1hcgowDRFDFajjOd7t2mv8cGvxy487+qEPyGgkXkOy34Zka9oeSlnskdZw==}
+  yamb-microtypo@0.2.1:
+    resolution: {integrity: sha512-bXmeONZRskIV+gEj3zv9KVHiZKaPiGOaA7KqY+wvUlF2avJ1poJWSNFB2OfTOJKohYbfBhkLIfY7SQOJBYbDgQ==}
     engines: {node: '>=26.13.0'}
 
-  yamb-render-html@0.1.1:
-    resolution: {integrity: sha512-y+teBJKojSF4vWU9hVUaFJHsEJSeOeEtqTh1x2FLOaClohoha54xeYTg1nSGc6CqgP0GUB+vpiIio0lVnuNFwQ==}
-    engines: {node: '>=26.13.0'}
-    peerDependencies:
-      yamb: ^1.0.0
-
-  yamb-render-json@0.1.3:
-    resolution: {integrity: sha512-L3fz6q9YjTFJxK138sz93PYLUHfBGoa1Jiw11B/yDZHDOls94kSn1tDlz8gxpbGNlK9kWNNZOTZhCiM//2MxVg==}
+  yamb-render-html@0.1.3:
+    resolution: {integrity: sha512-KvURzFPNX0DVR/6rtOj6JkG/XzsLSfr3E0Nz23ev0yND8D3GB3DZXC400tYGyHuYKzNxw1MGfXkjvas8Gjk1nQ==}
     engines: {node: '>=26.13.0'}
     peerDependencies:
-      yamb: ^1.0.0
+      yamb: ^1.1.0
 
-  yamb@1.0.3:
-    resolution: {integrity: sha512-CD6q13DzvAW45ZkWqc6YmscYdTRvOs6wysJnFh+TQtWkYvOyn6uM9ZNm/orDF1obiPfSlXYJZkGWCmAZJN8uWQ==}
+  yamb-render-json@0.2.0:
+    resolution: {integrity: sha512-XmbfGNJRxd057qfzFaInGVs4TE+VBtmYJRA+T77ikapsWCI3y/A/6cVDn3iI2SlhuGWci1nDipdNPS0bxwrlPQ==}
+    engines: {node: '>=26.13.0'}
+    peerDependencies:
+      yamb: ^1.1.0
+
+  yamb@1.1.0:
+    resolution: {integrity: sha512-yhlXOHSy8bAzwIIhxb4akg3pXj3aSGHFGd4j2/L9tmpfvvIgiObSRGKxYJVg/PZ5GMTlKEFyKuOyqGJchRl4IQ==}
     engines: {node: '>=26.13.0'}
 
   zod@4.6.7:
@@ -1114,7 +1114,7 @@ snapshots:
 
   micromark-util-types@2.0.3: {}
 
-  microtypo@0.4.1: {}
+  microtypo@0.4.2: {}
 
   node@runtime:26.13.1: {}
 
@@ -1225,7 +1225,7 @@ snapshots:
 
   web-namespaces@2.0.1: {}
 
-  yamb-markdown@0.1.2(yamb@1.0.3):
+  yamb-markdown@0.1.5(yamb@1.1.0):
     dependencies:
       '@mdit/plugin-inline-rule': 2.2.5(markdown-it@15.0.3)
       hast-util-from-html: 2.1.0
@@ -1237,23 +1237,23 @@ snapshots:
       markdown-it-mark: 4.0.0
       markdown-it-task-lists: 2.1.1
       property-information: 7.2.0
-      yamb: 1.0.3
+      yamb: 1.1.0
 
-  yamb-microtypo@0.1.2:
+  yamb-microtypo@0.2.1:
     dependencies:
-      microtypo: 0.4.1
+      microtypo: 0.4.2
 
-  yamb-render-html@0.1.1(yamb@1.0.3):
+  yamb-render-html@0.1.3(yamb@1.1.0):
     dependencies:
-      yamb: 1.0.3
+      yamb: 1.1.0
       zod: 4.6.7
 
-  yamb-render-json@0.1.3(yamb@1.0.3):
+  yamb-render-json@0.2.0(yamb@1.1.0):
     dependencies:
-      yamb: 1.0.3
+      yamb: 1.1.0
       zod: 4.6.7
 
-  yamb@1.0.3:
+  yamb@1.1.0:
     dependencies:
       zod: 4.6.7
 
