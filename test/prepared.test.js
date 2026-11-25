@@ -161,6 +161,39 @@ for (const format of ['rss', 'atom']) {
     );
   });
 
+  test(`${format} accepts Temporal.Instant source dates and rejects uncloneable posts as input`, async () => {
+    const post = {
+      ...source(),
+      publishedAt: Temporal.Instant.from('2026-11-01T12:00:00Z'),
+      updatedAt: Temporal.Instant.from('2026-11-02T12:00:00Z')
+    };
+    const renderer = make({
+      prepare: (data) => {
+        assert.equal(data.publishedAt, '2026-11-01T12:00:00Z');
+        return prepared();
+      }
+    });
+    const entry = node(
+      parse(await renderer.collection({ posts: [post] }, ctx)),
+      format === 'rss' ? 'item' : 'entry'
+    );
+
+    assert.equal(
+      node(entry, format === 'rss' ? 'pubDate' : 'published').textContent,
+      format === 'rss' ? 'Sun, 01 Nov 2026 12:00:00 GMT' : '2026-11-01T12:00:00.000000000Z'
+    );
+    await assert.rejects(
+      () => make().collection({ posts: [{ ...source(), options: { fn() {} } }] }, ctx),
+      { code: 'YAMB_RENDERER_INPUT' }
+    );
+  });
+
+  test(`${format} rejects missing or noniterable posts in direct calls`, async () => {
+    for (const input of [undefined, {}, { posts: 3 }]) {
+      await assert.rejects(() => make().collection(input, ctx), { code: 'YAMB_RENDERER_INPUT' });
+    }
+  });
+
   test(`${format} uses escaped literal content without a hidden parser`, async () => {
     const post = {
       ...source(),

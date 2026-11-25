@@ -13,6 +13,24 @@ function parse(schema, value, message) {
   return result.data;
 }
 
+function snapshot(value) {
+  const data =
+    value && typeof value === 'object'
+      ? Object.fromEntries(
+          Object.entries(value).map(([key, field]) => [
+            key,
+            field instanceof Temporal.Instant ? field.toString() : field
+          ])
+        )
+      : value;
+
+  try {
+    return structuredClone(data);
+  } catch (error) {
+    throw new RendererInputError('post must be cloneable PostData', { cause: error });
+  }
+}
+
 function escape(value) {
   return value
     .replaceAll('&', '&amp;')
@@ -33,7 +51,7 @@ function literal(title, { text, preview, cover }) {
 }
 
 export async function content(value, config, ctx) {
-  const source = structuredClone(value);
+  const source = snapshot(value);
   const post = parse(FeedPostSchema, source, 'feed requires saved published posts');
 
   const prepared = config.prepare

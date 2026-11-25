@@ -65,6 +65,11 @@ test('pubDate is RFC 2822 UTC', () => {
   assert.ok(out.includes('<pubDate>Sun, 26 Apr 2026 12:00:00 GMT</pubDate>'));
 });
 
+test('pubDate converts offsets to GMT, truncates fractions and pads early years', () => {
+  const out = buildItem(makeFakePost({ publishedAt: '0999-03-04T05:06:07.999999999+03:00' }));
+  assert.ok(out.includes('<pubDate>Mon, 04 Mar 0999 02:06:07 GMT</pubDate>'));
+});
+
 test('description is escaped post.preview', () => {
   const out = buildItem(makeFakePost({ preview: 'A & B' }));
   assert.ok(out.includes('<description>A &amp; B</description>'));

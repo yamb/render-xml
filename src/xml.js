@@ -3,7 +3,20 @@ import { Buffer } from 'node:buffer';
 import { RendererInputError } from '#core/errors';
 import { url } from '#core/url';
 
-import { cleanXml, escapeXml } from './escape.js';
+// oxlint-disable-next-line eslint/no-control-regex
+const ILLEGAL_XML_CHARS = /[^\u0009\u000a\u000d -퟿-�\u{10000}-\u{10ffff}]/gu;
+const TEXT = /[&<>"'\r]/g;
+const ATTRIBUTE = /[&<>"'\r\t\n]/g;
+const entities = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&apos;',
+  '\r': '&#13;',
+  '\t': '&#9;',
+  '\n': '&#10;'
+};
 
 export function writer(bytes, format) {
   const parts = [];
@@ -20,46 +33,26 @@ export function writer(bytes, format) {
       return parts.length;
     },
 
-    raw(value, position) {
+    raw(value, position = parts.length) {
       const length = Buffer.byteLength(value);
       check(length);
       size += length;
-
-      if (position === undefined) {
-        parts.push(value);
-      } else {
-        parts.splice(position, 0, value);
-      }
+      parts.splice(position, 0, value);
     },
 
     text(value, attribute = false) {
-      const clean = cleanXml(value);
+      const clean = value.replace(ILLEGAL_XML_CHARS, '');
+      const pattern = attribute ? ATTRIBUTE : TEXT;
       let length = Buffer.byteLength(clean);
       check(length);
 
-      const pattern = attribute ? /[&<>"'\r\t\n]/g : /[&<>"'\r]/g;
-
       for (const [char] of clean.matchAll(pattern)) {
-        if (char === '"' || char === "'") {
-          length += 5;
-        } else if (char === '<' || char === '>' || char === '\t') {
-          length += 3;
-        } else {
-          length += 4;
-        }
-
+        length += entities[char].length - 1;
         check(length);
       }
 
       size += length;
-
-      let escaped = escapeXml(clean).replaceAll('\r', '&#13;');
-
-      if (attribute) {
-        escaped = escaped.replaceAll('\t', '&#9;').replaceAll('\n', '&#10;');
-      }
-
-      parts.push(escaped);
+      parts.push(clean.replace(pattern, (char) => entities[char]));
     },
 
     end() {

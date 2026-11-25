@@ -59,6 +59,10 @@ export async function blogWith(rows = [], config = {}) {
       }
     },
 
+    async fence(id, version) {
+      records.get(id).version = version;
+    },
+
     async *entries() {
       for (const { id, uri } of records.values()) {
         yield [id, uri];
