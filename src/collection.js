@@ -1,5 +1,5 @@
 import { AsyncIteratorHelper } from '#core/async-iterator';
-import { RendererFailedError, RendererInputError } from '#core/errors';
+import { isCancellation, RendererFailedError, RendererInputError } from '#core/errors';
 
 import { content } from './content.js';
 
@@ -36,11 +36,7 @@ export async function* entries(input, config, ctx) {
 }
 
 export function failure(format, error, signal) {
-  if (
-    (signal?.aborted && Object.is(error, signal.reason)) ||
-    error?.name === 'AbortError' ||
-    error?.code?.startsWith?.('YAMB_')
-  ) {
+  if (isCancellation(error, signal) || error?.code?.startsWith?.('YAMB_')) {
     return error;
   }
 
